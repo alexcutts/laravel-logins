@@ -92,6 +92,12 @@ class RequestContext implements Arrayable
      */
     public function toArray(): array
     {
+        if($this->location() === false) {
+            $location = null;
+        } else {
+            $location = $this->location()?->toArray();
+        }
+        
         return [
             'date' => $this->date()->toDateTimeString(),
             'device_type' => $this->parser()->getDeviceType(),
@@ -100,7 +106,7 @@ class RequestContext implements Arrayable
             'platform' => $this->parser()->getPlatform(),
             'browser' => $this->parser()->getBrowser(),
             'ip' => $this->ipAddress(),
-            'location' => $this->location()?->toArray(),
+            'location' => $location,
         ];
     }
 }
